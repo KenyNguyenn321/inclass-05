@@ -16,6 +16,16 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   int happinessLevel = 50;
   int hungerLevel = 50;
 
+  Color _moodColor(int happinessLevel) {
+    if (happinessLevel > 70) {
+      return Colors.green;
+    } else if (happinessLevel >= 30) {
+      return Colors.yellow;
+    } else {
+      return Colors.red;
+    }
+  }
+
   void _playWithPet() {
     setState(() {
       happinessLevel += 10;
@@ -59,6 +69,19 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text('Name: $petName', style: TextStyle(fontSize: 20.0)),
+            SizedBox(height: 16.0),
+            ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                _moodColor(happinessLevel),
+                BlendMode.modulate,
+              ),
+              child: Image.asset(
+                'assets/pet_image.png',
+                width: 180,
+                height: 180,
+                fit: BoxFit.contain,
+              ),
+            ),
             SizedBox(height: 16.0),
             Text('Happiness Level: $happinessLevel', style: TextStyle(fontSize: 20.0)),
             SizedBox(height: 16.0),
