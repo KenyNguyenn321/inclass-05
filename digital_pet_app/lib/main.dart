@@ -23,6 +23,8 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   DateTime? _winStartTime;
   bool _gameEnded = false;
 
+  int energyLevel = 50;
+
   Color _moodColor(int happinessLevel) {
     if (happinessLevel > 70) {
       return Colors.green;
@@ -223,6 +225,17 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
               Text(
                 'Mood: ${_moodText(happinessLevel)} ${_moodEmoji(happinessLevel)}',
                 style: TextStyle(fontSize: 20.0),
+              ),
+              SizedBox(height: 16.0),
+              Text('Energy Level: $energyLevel',
+                  style: TextStyle(fontSize: 20.0)),
+              SizedBox(height: 8.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: LinearProgressIndicator(
+                  value: energyLevel / 100,
+                  minHeight: 12,
+                ),
               ),
               SizedBox(height: 16.0),
               Text('Happiness Level: $happinessLevel',
