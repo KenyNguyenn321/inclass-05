@@ -16,6 +16,8 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   int happinessLevel = 50;
   int hungerLevel = 50;
 
+  final TextEditingController _nameController = TextEditingController();
+
   Color _moodColor(int happinessLevel) {
     if (happinessLevel > 70) {
       return Colors.green;
@@ -79,6 +81,12 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   }
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -90,6 +98,36 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _nameController,
+                        decoration: InputDecoration(
+                          labelText: 'Enter pet name',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          final txt = _nameController.text.trim();
+                          if (txt.isNotEmpty) {
+                            petName = txt;
+                            _nameController.clear();
+                          }
+                        });
+                      },
+                      child: Text('Set'),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 16.0),
               Text('Name: $petName', style: TextStyle(fontSize: 20.0)),
               SizedBox(height: 16.0),
               ColorFiltered(
