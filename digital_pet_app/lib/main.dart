@@ -18,6 +18,8 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   int hungerLevel = 50;
   int energyLevel = 50;
 
+  String selectedActivity = "Run";
+
   final TextEditingController _nameController = TextEditingController();
   Timer? _hungerTimer;
 
@@ -215,6 +217,28 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
               ),
               SizedBox(height: 16.0),
               Text('Name: $petName', style: TextStyle(fontSize: 20.0)),
+              SizedBox(height: 16.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: DropdownButton<String>(
+                  value: selectedActivity,
+                  isExpanded: true,
+                  items: ["Run", "Sleep", "Play"]
+                      .map((activity) => DropdownMenuItem<String>(
+                            value: activity,
+                            child: Text(activity),
+                          ))
+                      .toList(),
+                  onChanged: _gameEnded
+                      ? null
+                      : (value) {
+                          if (value == null) return;
+                          setState(() {
+                            selectedActivity = value;
+                          });
+                        },
+                ),
+              ),
               SizedBox(height: 16.0),
               ColorFiltered(
                 colorFilter: ColorFilter.mode(
