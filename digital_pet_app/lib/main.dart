@@ -16,14 +16,13 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   String petName = "Your Pet";
   int happinessLevel = 50;
   int hungerLevel = 50;
+  int energyLevel = 50;
 
   final TextEditingController _nameController = TextEditingController();
   Timer? _hungerTimer;
 
   DateTime? _winStartTime;
   bool _gameEnded = false;
-
-  int energyLevel = 50;
 
   Color _moodColor(int happinessLevel) {
     if (happinessLevel > 70) {
@@ -61,6 +60,10 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     setState(() {
       happinessLevel += 10;
       if (happinessLevel > 100) happinessLevel = 100;
+
+      energyLevel -= 10;
+      if (energyLevel < 0) energyLevel = 0;
+
       _updateHunger();
     });
 
@@ -73,6 +76,10 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     setState(() {
       hungerLevel -= 10;
       if (hungerLevel < 0) hungerLevel = 0;
+
+      energyLevel += 5;
+      if (energyLevel > 100) energyLevel = 100;
+
       _updateHappiness();
       if (happinessLevel > 100) happinessLevel = 100;
       if (happinessLevel < 0) happinessLevel = 0;
